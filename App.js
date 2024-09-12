@@ -2,6 +2,9 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import WeatherIcon from './app/weatherIcon';
+import WeatherCarousel from './app/weatherCarousel';
+
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -10,7 +13,7 @@ export default function App() {
   const searchBar = 
 
   <View style={styles.row}>
-    <TextInput style={styles.textInput} />
+    <TextInput placeholder='search...' placeholderTextColor={"white"} style={styles.textInput} />
     <TouchableOpacity style={{ backgroundColor: 'white', borderRadius: 40, margin: 10 }}>
       <FontAwesome style={{ margin: 10 }} name="search" size={24} color="black" />
     </TouchableOpacity>
@@ -60,9 +63,9 @@ export default function App() {
       {HumidityPercentage}
       
       {WindSpeed}
-
       </View>
-      
+      <WeatherCarousel/>
+      <View style={{margin: 30}} />
       </View>
       </ScrollView>
       </LinearGradient>
@@ -86,6 +89,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   textInput: {
+    borderColor: 'white',
+    
     fontSize: 20,
     color: "white",
     marginVertical: 30,
