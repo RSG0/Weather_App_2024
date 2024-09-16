@@ -8,14 +8,17 @@ import WeatherCarousel from './app/weatherCarousel';
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
+import { useEffect, useState } from 'react';
 
 export default function Weather() {
+  const [weatherData, setWeatherData] = useState(false);
+
   const searchBar = 
 
   <View style={styles.row}>
     <TextInput placeholder='search...' placeholderTextColor={"white"} style={styles.textInput} />
     <TouchableOpacity style={{ backgroundColor: 'white', borderRadius: 40, margin: 10 }}>
-      <FontAwesome style={{ margin: 10 }} name="search" size={24} color="white" />
+      <FontAwesome style={{ margin: 10 }} name="search" size={24} color="black" />
     </TouchableOpacity>
   </View>;
 
@@ -33,6 +36,31 @@ export default function Weather() {
       <Text style={styles.textStyle} >Humidity %: {"\n"}42% </Text>
     </View>
   </View>;
+
+  const search = async (city) =>
+  {
+    try 
+    {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=a42c92b989efd531fd7fd6fd1691c0c7`;
+      const response =await fetch(url);
+      const data = await response.json();
+
+      console.log(data);
+      setWeatherData({
+        humidity: data.main.humidity,
+        temperature: data.main.temp,
+        windSpeed: data.wind.speed
+
+      })
+
+    } catch (error) {
+      console.log(error + " ERROR");
+    }
+  }
+  useEffect( () =>
+  {
+    search("London")
+  }, [])
   return (
       <LinearGradient
         style={styles.background}
@@ -46,14 +74,17 @@ export default function Weather() {
       <View style={{justifyContent: 'center', alignItems: 'center',}}>
       <View style={{margin: 15}}/>
       {searchBar}
+      <Text style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}>Irving | <Text style={{ opacity: .6}} >Texas</Text></Text>
+
       <View style={{marginTop: 40}}>
+
         <Ionicons name="sunny" size={150} color="yellow"/>
-        <Text style={[styles.textStyle, {alignSelf: 'center', fontSize: "25%"}]} >Sunny</Text>
       </View>
 
       <View style={{alignItems: 'center'}}>
-        <Text style={{fontSize: 60, fontWeight: 'bold', color: 'white'}}>22.2°c</Text>
-        <Text style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}>Irving</Text>
+        <Text style={[styles.textStyle, {alignSelf: 'center', fontSize: "25%"}]} >Sunny</Text>
+        <Text style={{fontSize: 60, fontWeight: 'bold', color: 'white'}}>{weatherData.temperature}°c</Text>
+
       </View>
 
       <View style={[styles.row, {justifyContent: 'space-evenly', width: "100%",marginVertical: 30}]}>
