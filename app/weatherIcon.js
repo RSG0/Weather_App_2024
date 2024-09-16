@@ -3,9 +3,9 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity
 export default function WeatherIcon() 
 {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <Text style={{fontSize: 20, color: 'white'}} >MON</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 
